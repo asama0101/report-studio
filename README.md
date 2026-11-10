@@ -8,6 +8,7 @@
 - 足りない情報（目的・読み手・必須の内容・分量）だけを質問する。
 - デザイン方向を 2〜3 案出し、選んだ案で `frontend-design` の指針に沿って設計する。
 - 作った HTML を Playwright MCP で開き、画面幅 1280px と 375px、印刷表示の崩れを確かめて直す。
+- `dataviz` スキルが使える環境では、グラフを描くときの指針にも使う（なくても動く）。
 - 印刷（ブラウザの PDF 保存を含む）で崩れにくい。外部 CDN・Web フォント・外部画像は使わない（画像は埋め込む）。
 
 PDF・PowerPoint の生成、複数ページのサイト、フォーム送信などの双方向機能は対象外。
@@ -16,25 +17,60 @@ PDF・PowerPoint の生成、複数ページのサイト、フォーム送信な
 
 - Windows 11（動作を確かめた OS）
 - Claude Code
+- Git（B の clone に使う）
 - Node.js 18 以上（Playwright MCP の起動に使う）
 - Playwright MCP（必須）
 - `frontend-design` プラグイン（必須）
-- `dataviz` スキル（任意。グラフを描くときの指針になる）
 
 ## 導入方法
 
-### 1. プラグインを読み込む
+### 1. プラグインを入れる
 
-リポジトリを取得し、レポートを保存したいフォルダで、取得したフォルダを指定して Claude Code を起動する（レポートは起動したフォルダに保存される）。
+次のどちらか 1 つを選ぶ。
+
+**A. GitHub のマーケットプレイスから入れる**
+
+Claude Code の中で、次の 2 つを実行する。
+
+```
+/plugin marketplace add asama0101/report-studio
+/plugin install report-studio@report-studio
+```
+
+**B. clone して入れる**
+
+リポジトリを取得し、取得したフォルダをマーケットプレイスとして登録する。
 
 ```
 git clone https://github.com/asama0101/report-studio.git
+```
+
+Claude Code の中で、次の 2 つを実行する。`<clone したフォルダのパス>` は、clone したフォルダの絶対パス（例: `D:\tools\report-studio`）に置き換える。
+
+```
+/plugin marketplace add <clone したフォルダのパス>
+/plugin install report-studio@report-studio
+```
+
+インストールしたあとは、clone したフォルダを移動・削除しない（インストールが、そのフォルダを直接読んでいる可能性がある。未検証）。
+
+インストールせずに試すだけなら、シェルで次のように起動する。この指定は起動ごとに必要で、指定しない起動では読み込まれない。
+
+```
 claude --plugin-dir <clone したフォルダのパス>
 ```
 
-例: `claude --plugin-dir D:\tools\report-studio`。この指定は起動ごとに必要で、指定しない起動では読み込まれない。
+**A と B を切り替えるとき**
 
-`/help` に `report-studio:create` と `report-studio:doctor` が出れば、読み込めている。
+A と B は、どちらも同じ名前（`report-studio`）のマーケットプレイスを登録する。切り替えるには、登録を消して入れ直す。登録を消すと、そのマーケットプレイスから入れた `report-studio` も外れる可能性がある（未検証）。
+
+1. `/plugin marketplace remove report-studio` を実行する。
+2. 切り替え先の `/plugin marketplace add ...` を実行する。
+3. `/plugin install report-studio@report-studio` を実行する。
+
+元に戻すときは、A と B を入れ替えて同じ手順を行う。
+
+どちらの場合も、`/help` に `report-studio:create` と `report-studio:doctor` が出れば、読み込めている。
 
 ### 2. Playwright MCP を登録する
 
@@ -58,6 +94,15 @@ claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestri
 /report-studio:doctor
 ```
 
+### 更新する
+
+新しい版が出たら、Claude Code の中で次の 2 つを実行し、Claude Code を再起動する。B で入れた場合は、先に clone したフォルダで `git pull` を実行する。
+
+```
+/plugin marketplace update report-studio
+/plugin update report-studio@report-studio
+```
+
 ## 使い方
 
 ```
@@ -79,6 +124,17 @@ claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestri
 修正は、同じ会話で「色を変えて」「章を足して」のように頼む。
 
 素材の内容（機密情報を含む）は HTML にそのまま入る。共有する前に確かめる。
+
+### 素材の扱い
+
+| 素材 | 扱い |
+|---|---|
+| CSV・Markdown・テキスト | そのまま読む。 |
+| 画像（PNG・JPG） | HTML に埋め込む。大きい画像は縮小するか、確認される。 |
+| Excel など | 読める関連スキルがあるときだけ読む。読めなければ、その旨が伝えられる。 |
+| 1000 行を超える CSV | 全件は載せない。集計・要約した結果だけを載せる。 |
+
+会話の内容は素材にならない。素材にしたい内容は、ファイルにして渡す。
 
 ## 困ったとき
 
