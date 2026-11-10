@@ -94,6 +94,8 @@ claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestri
 /report-studio:doctor
 ```
 
+必要な環境のほかに、GitHub のマーケットプレイスから入れた場合は、インストールした版が最新かも確かめる（インターネット接続が要る）。
+
 ### 更新する
 
 新しい版が出たら、Claude Code の中で次の 2 つを実行し、Claude Code を再起動する。B で入れた場合は、先に clone したフォルダで `git pull` を実行する。
