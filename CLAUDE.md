@@ -24,4 +24,4 @@ Claude Code 用プラグイン `report-studio`（`plugins/report-studio/`）。�
 - 版は `plugins/report-studio/.claude-plugin/plugin.json` の `version` だけにある。
 - SKILL.md の環境の判定方法は、create と doctor で同じ文面にそろえる。
 - 規則は `~/.claude/reference/plugin-rules.md`。SKILL.md や README を直したら、テストを先に流す。
-- `docs/superpowers/`・`docs/grill-form/` は `.gitignore` の対象（作業メモの置き場）。
+- `docs/superpowers/`・`docs/spec-interview/` は `.gitignore` の対象（作業メモの置き場）。
