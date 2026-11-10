@@ -1,0 +1,11 @@
+report-studio の出典とライセンス
+
+report-studio 自体のライセンスは MIT（リポジトリ直下の LICENSE）。
+
+## 同梱している外部のコード・文書
+
+なし。
+
+## 実行時に使う他のプラグイン・MCP（同梱しない・再配布しない）
+
+- frontend-design プラグイン（必須）、dataviz スキル（任意）、Playwright MCP（必須）。利用者が別に入れる。
