@@ -4,5 +4,5 @@ __pycache__/
 .ruff_cache/
 tests/work/
 docs/superpowers/
-docs/grill-form/
+docs/spec-interview/
 .superpowers/
