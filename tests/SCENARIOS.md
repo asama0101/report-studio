@@ -10,10 +10,12 @@
 
 Playwright MCP の無効化（シナリオ 10）: `claude --strict-mcp-config` で起動する（設定済みの MCP を読み込まない）。終わったら通常の起動に戻す。
 
+※ 結果欄は、2026-11-10 の実施結果（構成変更前）。2026-11-11 に新しい構成（plugins/report-studio/）で再実施したのは、シナリオ 1・2 だけ。3〜10 は未再実施。
+
 | # | 受入条件 | 手順 | 期待結果 | 結果 |
 |---|---|---|---|---|
-| 1 | 1 | 起動後に `/help` を開く | `report-studio:create` と `report-studio:doctor` が出る | 一部: /help は未確認。--plugin-dir で create と doctor の両方が実行できた |
-| 2 | 9 | `/report-studio:doctor` を実行 | Playwright MCP・`frontend-design`・`dataviz` が、使える／使えない／未導入でも動く で箇条書きになる。使えない項目に README の節名が付く | 通過: 環境が揃った場合は 3 項目とも「使える」。`--strict-mcp-config` では Playwright MCP が「使えない」になり、README の「導入方法」の 2 を案内した |
+| 1 | 1 | 起動後に `/help` を開く | `report-studio:create` と `report-studio:doctor` が出る | 一部: /help は未確認。--plugin-dir で create と doctor の両方が実行できた; 2026-11-11 再実施（plugins/report-studio/ の構成）: `/report-studio:doctor` が実行でき、create と doctor が解決された。/help の表示は未確認 |
+| 2 | 9 | `/report-studio:doctor` を実行 | Playwright MCP・`frontend-design`・`dataviz` が、使える／使えない／未導入でも動く で箇条書きになる。使えない項目に README の節名が付く | 通過: 環境が揃った場合は 3 項目とも「使える」。`--strict-mcp-config` では Playwright MCP が「使えない」になり、README の「導入方法」の 2 を案内した; 2026-11-11 再実施（非対話の `claude -p`）: Playwright MCP・frontend-design・dataviz の 3 項目とも「使える」。版の確認は `known_marketplaces.json` などの読み取り権限がなく止まった（対話で承認すれば確認できる見込み・未確認） |
 | 3 | 2, 4, 5, 10 | `/report-studio:create D:\claude\local-repo\report-studio\tests\fixtures\sales.csv を、経営会議向けの月次売上レポートにして。読み手は役員、A4 で 2 ページ程度、売上の推移と件数を中心に` | 質問なしでデザイン方向の選択に進む。選ぶと `YYYY-MM-DD-題名.html` が作業フォルダ直下にできる。CSV の月・売上が本文に入り、選んだ方向が見た目に出る。完了報告に保存先の絶対パス、デザイン方針、検証結果（画面幅と直した点）が入る | 通過（デザイン選択は依頼文に含めて代替）。質問なしで案を提示し、HTML 生成、1280px/375px/印刷表示とも崩れなし。SKILL.md 修正後に再実行し、本文の数値（7月以降の最小 148 万円、前月比 +7.1%、後半/前半 +15.9%・+17.9% ほか）を CSV から計算して一致を確認 |
 | 4 | 3, 6 | シナリオ 3 の HTML に `check_html.py` を実行。ブラウザで印刷表示にして横スクロールがないことを見る | `OK` が出る。横方向のはみ出しがない | 通過: check_html OK、印刷表示で scrollWidth=clientWidth=779、2 ページ |
 | 5 | Review Focus | シナリオ 3 の HTML を開く | `<script>alert(1)</script>` が文字として表示され、実行されない（アラートが出ない） | 通過: <script> は文字で表示、script 要素 0、アラートなし |
