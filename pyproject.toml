@@ -15,4 +15,5 @@ preview = true
 explicit-preview-rules = true  # コードを指定した preview のルールだけ有効にする
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["S101", "S105", "S106", "S108", "S603", "S607"]
+# N802 は、テスト名に日本語と英大文字（SKILL・MCP など）を使うため
+"tests/**" = ["S101", "S105", "S106", "S108", "S603", "S607", "N802"]

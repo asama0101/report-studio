@@ -57,7 +57,7 @@ Claude Code の中で、次の 2 つを実行する。`<clone したフォルダ
 インストールせずに試すだけなら、シェルで次のように起動する。この指定は起動ごとに必要で、指定しない起動では読み込まれない。
 
 ```
-claude --plugin-dir <clone したフォルダのパス>
+claude --plugin-dir <clone したフォルダのパス>\plugins\report-studio
 ```
 
 **A と B を切り替えるとき**
@@ -104,6 +104,18 @@ claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestri
 /plugin marketplace update report-studio
 /plugin update report-studio@report-studio
 ```
+
+### アンインストール
+
+```
+/plugin uninstall report-studio@report-studio
+```
+
+| 項目 | アンインストール後 |
+|---|---|
+| 作ったレポート（実行したフォルダの `YYYY-MM-DD-題名.html`） | 残る。不要なら手で消す |
+| Playwright MCP・`frontend-design`（別に入れたもの） | 残る。不要なら `claude mcp remove playwright -s user` と `/plugin uninstall` で消す |
+| プラグイン自身の保存データ | なし |
 
 ## 使い方
 
