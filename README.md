@@ -1,6 +1,6 @@
 # report-studio
 
-希望した内容を伝えるだけで、デザインされた HTML レポートを作る Claude Code プラグイン。
+希望した内容を伝えるだけで、デザインされた HTML レポートを作る Claude Code プラグイン。CSV やメモをもとに、読み手に合わせたレポートを作りたい人向け。
 
 ## 機能
 
@@ -8,7 +8,7 @@
 - 足りない情報（目的・読み手・必須の内容・分量）だけを質問する。
 - デザイン方向を 2〜3 案出し、選んだ案で `frontend-design` の指針に沿って設計する。
 - 作った HTML を Playwright MCP で開き、画面幅 1280px と 375px、印刷表示の崩れを確かめて直す。
-- 印刷・PDF 出力に耐える。外部 CDN・Web フォント・外部画像は使わない（画像は埋め込む）。
+- 印刷（ブラウザの PDF 保存を含む）で崩れにくい。外部 CDN・Web フォント・外部画像は使わない（画像は埋め込む）。
 
 PDF・PowerPoint の生成、複数ページのサイト、フォーム送信などの双方向機能は対象外。
 
@@ -25,9 +25,14 @@ PDF・PowerPoint の生成、複数ページのサイト、フォーム送信な
 
 ### 1. プラグインを読み込む
 
+リポジトリを取得し、レポートを保存したいフォルダで、取得したフォルダを指定して Claude Code を起動する（レポートは起動したフォルダに保存される）。
+
 ```
-claude --plugin-dir D:\claude\local-repo\xxx
+git clone https://github.com/asama0101/report-studio.git
+claude --plugin-dir <clone したフォルダのパス>
 ```
+
+例: `claude --plugin-dir D:\tools\report-studio`。この指定は起動ごとに必要で、指定しない起動では読み込まれない。
 
 `/help` に `report-studio:create` と `report-studio:doctor` が出れば、読み込めている。
 
@@ -36,6 +41,8 @@ claude --plugin-dir D:\claude\local-repo\xxx
 ```
 claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestricted-file-access
 ```
+
+すでに `playwright` を登録している場合は、先に `claude mcp remove playwright -s user` で消してから実行する（登録を消す操作なので、元の設定を控えておく）。
 
 `-s user` は、どのフォルダで使っても Playwright MCP が見えるようにする（付けないと、登録したフォルダだけで有効になる）。`--allow-unrestricted-file-access` は、ローカルの HTML を `file://` で開くために必要。登録後、Claude Code を再起動する。
 
@@ -61,13 +68,21 @@ claude mcp add -s user playwright -- npx @playwright/mcp@latest --allow-unrestri
 2. デザイン方向が 2〜3 案出るので、選ぶ。
 3. 実行したフォルダ直下に `YYYY-MM-DD-題名.html` が保存される。完了報告に、保存先のパス、デザイン方針、検証の結果が出る。
 
+完了報告の例（内容は依頼ごとに変わる）:
+
+```
+保存先: C:\work\2026-11-10-先月の売上.html
+デザイン方針: 落ち着いた紺と白を基調にした、経営会議向けの構成。
+検証: 幅 1280px と 375px、印刷表示を確認。375px で表がはみ出したため、横スクロールに直した。
+```
+
 修正は、同じ会話で「色を変えて」「章を足して」のように頼む。
 
 素材の内容（機密情報を含む）は HTML にそのまま入る。共有する前に確かめる。
 
 ## 困ったとき
 
-### 「Playwright MCP が使えません」と出て、HTML が作られない
+### HTML が作られず、Playwright MCP が使えないと伝えられる
 
 Playwright MCP が登録されていない、または再起動していない。導入方法の 2 を行い、`/report-studio:doctor` で確かめる。
 
@@ -78,3 +93,7 @@ Playwright MCP が `--allow-unrestricted-file-access` なしで登録されて�
 ### 同じ名前のファイルがある
 
 上書きしてよいか聞かれる。「いいえ」と答えると、末尾に `-2`, `-3` を付けた名前で保存される。
+
+## ライセンス
+
+[MIT License](LICENSE)
