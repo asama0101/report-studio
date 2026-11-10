@@ -1,5 +1,10 @@
 {
   "name": "report-studio",
   "description": "希望した内容で、frontend-design の指針に沿った 1 ファイル完結の HTML レポートを生成する",
-  "version": "0.1.0"
+  "version": "1.0.0",
+  "author": {
+    "name": "asama0101"
+  },
+  "license": "MIT",
+  "repository": "https://github.com/asama0101/report-studio"
 }
