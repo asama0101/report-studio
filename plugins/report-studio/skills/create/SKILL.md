@@ -47,6 +47,7 @@ description: 利用者が希望した内容で、デザインされた 1 ファ�
    - 印刷表示（`browser_emulate_media` の print）にして、`browser_evaluate` で `document.documentElement.scrollWidth` が `clientWidth` を超えないこと（横方向のはみ出しがない）を確かめる。
    - 崩れがあれば直して、もう一度確かめる。修正は最大 3 回までとし、残ったら完了報告に書く。
    - `file://` が開けない設定のときは、止まって設定（`--allow-unrestricted-file-access` など）を案内する。
+   - 検証が終わったら、この作業で自分が作った一時ファイル（生成用のスクリプト・スクリーンショットなど）を削除する。残すのは、手順 6 で保存した HTML だけ。利用者の素材と、もとからあるファイルは消さない。
 
 8. **完了報告**: 次の 3 点を伝える。
    - 保存先の絶対パス
