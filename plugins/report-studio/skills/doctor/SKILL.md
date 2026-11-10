@@ -12,7 +12,7 @@ report-studio の動作に必要な環境を点検し、結果を、共通の行
 2. `frontend-design`: 利用可能なスキルの一覧に `frontend-design:frontend-design` があれば `[OK]`、なければ `[NG]`。
 3. `dataviz`（任意）: スキルの一覧にあれば `[OK]`、なければ `[任意]`（未導入でも動く）。
 
-4. 版（report-studio 本体）: 次の順に調べる。読み取りだけを行う。
+4. プラグインのバージョン（report-studio 本体。項目名は「プラグインのバージョン」）: 次の順に調べる。読み取りだけを行う。
    1. `~/.claude/plugins/known_marketplaces.json` の `report-studio` の `source` が `"source": "github"` でなければ、「GitHub のマーケットプレイスから入れていないので、確認しない」と`[情報]` で報告して終わる（`--plugin-dir` で使っている場合など）。
    2. `~/.claude/plugins/installed_plugins.json` の `report-studio@report-studio` の `version` を、現在の版とする。見つからなければ「マーケットプレイス経由で入っていない」と`[情報]` で報告して終わる。
    3. 手順 1 の `source.repo` を使い、Bash で `curl -fsS https://raw.githubusercontent.com/<repo>/HEAD/plugins/report-studio/.claude-plugin/plugin.json` を実行し、`version` を最新の版とする。取得できなければ「最新版を確認できなかった」と `[情報]` で報告して終わる。
@@ -29,7 +29,7 @@ report-studio の動作に必要な環境を点検し、結果を、共通の行
 [NG] frontend-design: 使えません
   → README の「導入方法」の 3 を行う
 [任意] dataviz: 未導入（なくても動く）
-[情報] 版: v1.0.0（最新です）
+[情報] プラグインのバージョン: v1.0.0（最新です）
 ```
 
-判定は推定であることを、最後に 1 行添える。
+出力は、項目の行と対処の行だけにする（前置きや結びの文は付けない）。
