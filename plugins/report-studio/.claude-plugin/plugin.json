@@ -1,6 +1,6 @@
 {
   "name": "report-studio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "希望した内容で、frontend-design の指針に沿った 1 ファイル完結の HTML レポートを生成する。",
   "author": { "name": "report-studio contributors" },
   "license": "MIT",
