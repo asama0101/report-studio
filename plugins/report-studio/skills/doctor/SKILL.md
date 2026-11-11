@@ -12,11 +12,14 @@ report-studio の動作に必要な環境を点検し、結果を、共通の行
 2. `frontend-design`: 利用可能なスキルの一覧に `frontend-design:frontend-design` があれば `[OK]`、なければ `[NG]`。
 3. `dataviz`（任意）: スキルの一覧にあれば `[OK]`、なければ `[任意]`（未導入でも動く）。
 
-4. プラグインのバージョン（report-studio 本体。項目名は「プラグインのバージョン」）: 次の順に調べる。読み取りだけを行う。
-   1. `~/.claude/plugins/known_marketplaces.json` の `report-studio` の `source` が `"source": "github"` でなければ、「GitHub のマーケットプレイスから入れていないので、確認しない」と`[情報]` で報告して終わる（`--plugin-dir` で使っている場合など）。
-   2. `~/.claude/plugins/installed_plugins.json` の `report-studio@report-studio` の `version` を、現在の版とする。見つからなければ「マーケットプレイス経由で入っていない」と`[情報]` で報告して終わる。
-   3. 手順 1 の `source.repo` を使い、Bash で `curl -fsS https://raw.githubusercontent.com/<repo>/HEAD/plugins/report-studio/.claude-plugin/plugin.json` を実行し、`version` を最新の版とする。取得できなければ「最新版を確認できなかった」と `[情報]` で報告して終わる。
-   4. 現在の版と最新の版を、`MAJOR.MINOR.PATCH` の数値で比べる。同じなら「最新です」。最新の版が大きければ「GitHub に vX.Y.Z があります」と `[情報]` で報告し、次の行に「→」で README の「更新する」の 2 つのコマンドを案内する。現在の版が大きければ、その旨だけを報告する。
+4. プラグインのバージョン（report-studio 本体）: 次の順に調べる。読み取りだけを行う。行の頭は `[情報] プラグインのバージョン: v<現在のバージョン>`。
+   1. `${CLAUDE_PLUGIN_ROOT}/.claude-plugin/plugin.json` の `version` を、現在のバージョンとする。
+   2. `~/.claude/plugins/known_marketplaces.json` の `report-studio` の `source` が `"source": "github"` でなければ（`--plugin-dir` で使っている場合など）、「（GitHub のマーケットプレイスに登録していないため、最新かは確認しません）」を続けて終わる。
+   3. 手順 2 の `source.repo` を使い、Bash で `curl -fsS https://raw.githubusercontent.com/<repo>/HEAD/plugins/report-studio/.claude-plugin/plugin.json` を実行し、`version` を最新のバージョンとする。取得できないとき、または手順 2 のファイルを読めないときは、「（最新のバージョンを確認できませんでした: <理由>）」を続け、次の行に「  → ネットワークにつながっているか、github.com への通信を止めていないかを確認する」を書いて終わる。
+   4. 現在と最新を、`MAJOR.MINOR.PATCH` の数値で比べる。現在が最新以上なら「（最新です）」。最新が大きければ「（GitHub に v<最新> があります）」を続け、次の 3 行を書く。
+      - `  → /plugin marketplace update report-studio を実行する`
+      - `  → /plugin update report-studio@report-studio を実行する`
+      - `  → Claude Code を開き直す`
 
 `[NG]` の項目には、README の「導入方法」の該当する番号を添える。
 - Playwright MCP → 「導入方法」の 2
